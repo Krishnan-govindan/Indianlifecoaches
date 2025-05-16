@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Krishnan's Blog</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; }
+    .post { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee; }
+    img { width: 100%; border-radius: 8px; margin-top: 1rem; }
+    .title { color: #d72638; font-size: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1>My Blog</h1>
+  <div id="blog-container"></div>
+
+  <script>
+    fetch('blogs.json')
+      .then(res => res.json())
+      .then(posts => {
+        const container = document.getElementById('blog-container');
+        posts.forEach(post => {
+          container.innerHTML += `
+            <div class="post">
+              <img src="${post.thumbnail}" alt="${post.title}">
+              <h2 class="title">${post.title}</h2>
+              <p><small>${new Date(post.date).toLocaleDateString()}</small></p>
+              <p>${post.excerpt}</p>
+              <a href="${post.link}" target="_blank">Read more →</a>
+            </div>
+          `;
+        });
+      });
+  </script>
+</body>
+</html>
